@@ -2,14 +2,15 @@ import React from 'react'
 
 const Main = () => {
   return (
-    <>
-        <div>
+    <section >
+        <section>
             Proje 1
-        </div>
-        <div>
-            Proje 2 
-        </div>
-    </>
+        </section>
+        <section>
+          Proje 2
+        </section>
+
+    </section>
   )
 }
 
