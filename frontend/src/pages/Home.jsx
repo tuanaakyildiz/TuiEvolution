@@ -1,5 +1,6 @@
 import React from 'react';
 import ProjectMarquee from '../components/ProjectMarquee';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   return (
@@ -21,35 +22,24 @@ const Home = () => {
         <ProjectMarquee />
       </section>
 
-      {/* Hakkımızda Kartları (Yan Yana) */}
-      <section className="container mx-auto px-6">
-        <h2 className="text-3xl font-bold text-center mb-10 text-textPrimary">Developers</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          
-          {/* Evrim Kart */}
-          <div className="glass p-8 rounded-3xl hover:border-accent transition-all duration-300 group">
-            <div className="w-20 h-20 bg-accent rounded-full mb-6 mx-auto flex items-center justify-center text-white text-2xl font-bold group-hover:scale-110 transition-transform">
-              EA
-            </div>
-            <h3 className="text-2xl font-bold text-accent mb-3 text-center">Evrim Aluç</h3>
-            <p className="opacity-80 text-center mb-6 text-sm leading-relaxed">
-              Backend Mimarı & Java Uzmanı. Güçlü altyapılar ve veri güvenliği üzerine çalışır.
-            </p>
-          </div>
+      {/* Developers Section */}
+<section className="container mx-auto px-6 py-20">
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+    {/* Evrim Kartı */}
+    <Link to="/about/evrim" className="glass p-8 rounded-[2.5rem] hover:scale-[1.02] transition-transform group cursor-pointer">
+      <div className="w-16 h-16 bg-accent rounded-2xl mb-6 flex items-center justify-center text-white font-bold text-xl group-hover:rotate-12 transition-transform">EA</div>
+      <h3 className="text-2xl font-bold text-accent mb-2">Evrim Aluç</h3>
+      <p className="opacity-70">Backend Architect & Java Developer. Specialized in scalable systems.</p>
+    </Link>
 
-          {/* Tuana Kart */}
-          <div className="glass p-8 rounded-3xl hover:border-accent transition-all duration-300 group">
-            <div className="w-20 h-20 bg-pink-500 rounded-full mb-6 mx-auto flex items-center justify-center text-white text-2xl font-bold group-hover:scale-110 transition-transform">
-              TA
-            </div>
-            <h3 className="text-2xl font-bold text-accent mb-3 text-center">Tuana Akyıldız</h3>
-            <p className="opacity-80 text-center mb-6 text-sm leading-relaxed">
-              Frontend Geliştirici & UI/UX Tasarımcı. Kullanıcı deneyimi ve modern arayüzler tasarlar.
-            </p>
-          </div>
-
-        </div>
-      </section>
+    {/* Tuana Kartı */}
+    <Link to="/about/tuana" className="glass p-8 rounded-[2.5rem] hover:scale-[1.02] transition-transform group cursor-pointer border-pink-300/30">
+      <div className="w-16 h-16 bg-pink-500 rounded-2xl mb-6 flex items-center justify-center text-white font-bold text-xl group-hover:-rotate-12 transition-transform">TA</div>
+      <h3 className="text-2xl font-bold text-accent mb-2">Tuana Akyıldız</h3>
+      <p className="opacity-70">Frontend Developer & Designer. Focused on aesthetic UI/UX experiences.</p>
+    </Link>
+  </div>
+</section>
     </div>
   );
 };

@@ -3,45 +3,45 @@
 @tailwind utilities;
 
 @layer base {
-  body {
-    @apply transition-colors duration-300 font-sans m-0;
-  }
-  
-  /* Light Mode Default */
-  body {
-    background-color: #FFDCF3;
-    color: #0D2D31;
+  :root {
+    --bg-primary: #FFDCF3; /* Light Mode: Tam pembe */
+    --bg-secondary: #FFB2F5;
+    --text-primary: #0D2D31;
+    --accent: #4F348D;
   }
 
-  /* Dark Mode Class Aktifken */
-  .dark body {
-    background-color: #1A0B2E;
-    color: #FFE6F7;
+  .dark {
+    --bg-primary: #1A0B2E; /* Dark Mode: Tam koyu mor */
+    --bg-secondary: #2D1B4E;
+    --text-primary: #FFE6F7;
+    --accent: #D6BCFA;
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    /* Sayfa kaydırıldığında pürüzsüz geçiş için */
+    @apply transition-colors duration-500; 
   }
 }
 
 @layer components {
-  /* Cam Efekti */
+  /* Cam Efekti - Sadece Navbar şeffafken veya özel alanlarda kullanmak için */
   .glass {
     @apply backdrop-blur-md border shadow-lg transition-colors duration-300;
-    /* Light Mode Glass */
     background-color: rgba(255, 255, 255, 0.2);
     border-color: rgba(255, 255, 255, 0.3);
   }
   
   .dark .glass {
-    /* Dark Mode Glass */
-    background-color: rgba(45, 27, 78, 0.6); /* Morumsu şeffaf */
+    background-color: rgba(45, 27, 78, 0.6);
     border-color: rgba(214, 188, 250, 0.1);
   }
 
   /* Kart Stili */
   .card {
      @apply rounded-2xl p-6 shadow-md transition-all duration-300;
-     background-color: #FFB2F5; /* Light Card */
-  }
-  .dark .card {
-     background-color: #2D1B4E; /* Dark Card */
-     color: #FFE6F7;
+     background-color: var(--bg-secondary);
+     color: var(--text-primary);
   }
 }
