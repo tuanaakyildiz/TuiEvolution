@@ -1,103 +1,110 @@
 import React, { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
-const Login = () => {
+export const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState('');
   
-  const { login } = useAuth(); // Context'ten gelen login fonksiyonu
+  const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleAuth = async (e) => {
     e.preventDefault();
     setError('');
 
-    // Basit doğrulama simülasyonu
-    if (!email || !password) {
-      setError("Lütfen tüm alanları doldurun.");
-      return;
-    }
+    try {
+      const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
+      const response = await fetch(`http://localhost:8080${endpoint}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
 
-    // Backend olmadığı için şimdilik mock login
-    if (isLogin) {
-      // GİRİŞ İŞLEMİ
-      // Gerçekte burada: axios.post('/api/login', {email, password})
-      if (email === "admin@test.com" && password === "123456") {
-         login({ name: "Admin User", email: email });
-         navigate('/profile'); // Başarılıysa profile git
+      const data = await response.json();
+
+      if (response.ok) {
+        login(data, rememberMe); // rememberMe true ise localStorage'a kaydeder
+        navigate('/');
       } else {
-         setError("Hatalı e-posta veya şifre.");
+        setError(data.message || 'Authentication failed');
       }
-    } else {
-      // KAYIT İŞLEMİ
-      // Gerçekte burada: axios.post('/api/register', ...)
-      if (email === "admin@test.com") {
-        setError("Bu e-posta adresi zaten kayıtlı."); // Var olan hesap hatası
-      } else {
-        // Kayıt başarılı varsayalım ve giriş yaptıralım
-        login({ name: "Yeni Kullanıcı", email: email });
-        navigate('/profile');
-      }
+    } catch (err) {
+      setError('Sunucu bağlantı hatası. Backend açık mı?');
     }
   };
 
   return (
-    <div className="min-h-screen pt-32 flex justify-center items-start">
-      <div className="glass p-8 rounded-3xl w-full max-w-md mx-4">
-        <h2 className="text-3xl font-bold text-accent dark:text-darkAccent mb-6 text-center">
-          {isLogin ? 'Giriş Yap' : 'Kayıt Ol'}
+    <div className="min-h-screen flex items-center justify-center p-6 bg-bg-primary">
+      <div className="w-full max-w-md glass p-10 rounded-[2.5rem] shadow-2xl">
+        <h2 className="text-3xl font-black text-accent mb-2 text-center">
+          {isLogin ? 'Welcome Back' : 'Create Account'}
         </h2>
+        <p className="text-center opacity-60 mb-8 text-sm italic">
+          {isLogin ? 'Login to continue your evolution' : 'Join TUIEVOLUTION today'}
+        </p>
 
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+          <div className="bg-red-500/10 border border-red-500 text-red-500 p-4 rounded-2xl text-sm mb-6 font-bold animate-shake">
             {error}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleAuth} className="space-y-5">
           <div>
-            <label className="block text-sm font-bold mb-2">E-Posta</label>
+            <label className="block text-xs font-bold uppercase mb-2 ml-1 opacity-70">Email Address</label>
             <input 
               type="email" 
+              required
+              className="w-full p-4 rounded-2xl bg-white/50 dark:bg-black/20 border-2 border-accent/10 focus:border-accent outline-none transition-all"
+              placeholder="tuana@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 rounded-xl bg-white/50 dark:bg-black/20 border border-accent/20 focus:outline-none focus:border-accent"
-              placeholder="ornek@email.com"
             />
           </div>
           <div>
-            <label className="block text-sm font-bold mb-2">Şifre</label>
+            <label className="block text-xs font-bold uppercase mb-2 ml-1 opacity-70">Password</label>
             <input 
               type="password" 
+              required
+              autoComplete="current-password"
+              className="w-full p-4 rounded-2xl bg-white/50 dark:bg-black/20 border-2 border-accent/10 focus:border-accent outline-none transition-all"
+              placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-3 rounded-xl bg-white/50 dark:bg-black/20 border border-accent/20 focus:outline-none focus:border-accent"
-              placeholder="******"
             />
           </div>
-          
-          <button 
-            type="submit" 
-            className="w-full bg-accent hover:bg-opacity-90 text-white font-bold py-3 rounded-xl transition-all shadow-lg"
-          >
-            {isLogin ? 'Giriş Yap' : 'Kayıt Ol'}
+
+          <div className="flex items-center justify-between px-1">
+            <label className="flex items-center gap-2 cursor-pointer group">
+              <input 
+                type="checkbox" 
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+                className="w-4 h-4 accent-accent"
+              />
+              <span className="text-xs font-bold opacity-70 group-hover:opacity-100 transition-opacity">Remember Me</span>
+            </label>
+            {isLogin && <button type="button" className="text-xs font-bold text-accent hover:underline">Forgot Password?</button>}
+          </div>
+
+          <button className="w-full bg-accent text-white py-4 rounded-2xl font-bold shadow-xl hover:shadow-accent/20 active:scale-95 transition-all">
+            {isLogin ? 'Sign In' : 'Create Account'}
           </button>
         </form>
 
-        <div className="mt-6 text-center">
-          <p className="text-sm opacity-80">
-            {isLogin ? "Hesabınız yok mu?" : "Zaten bir hesabınız var mı?"}
-          </p>
+        <p className="text-center mt-8 text-sm font-semibold opacity-70">
+          {isLogin ? "Don't have an account?" : "Already have an account?"}
           <button 
-            onClick={() => { setIsLogin(!isLogin); setError(''); }}
-            className="text-accent dark:text-darkAccent font-bold hover:underline mt-1"
+            onClick={() => setIsLogin(!isLogin)}
+            className="ml-2 text-accent font-black hover:underline"
           >
-            {isLogin ? "Hemen Kayıt Ol" : "Giriş Yap"}
+            {isLogin ? 'Register Now' : 'Login Here'}
           </button>
-        </div>
+        </p>
       </div>
     </div>
   );
