@@ -3,36 +3,45 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    /* LIGHT MODE (Senin Renklerin) */
-    --bg-primary: #FFDCF3;     /* Ana Arka Plan: Pembe */
-    --bg-secondary: #FFB2F5;   /* Kartlar/Navbar: Koyu Pembe */
-    --text-primary: #0D2D31;   /* Yazı: Petrol Yeşili */
-    --accent: #4F348D;         /* Vurgu/Logo: Mor */
-  }
-
-  .dark {
-    /* DARK MODE (Uyumlu Koyu Tema) */
-    --bg-primary: #1F122B;     /* Koyu Mor */
-    --bg-secondary: #3E2C4F;   /* Kartlar */
-    --text-primary: #FFE6F7;   /* Yazı: Açık Pembe */
-    --accent: #FFB2F5;         /* Vurgu: Parlak Pembe */
-  }
-
   body {
-    @apply bg-bgPrimary text-textPrimary transition-colors duration-300 font-sans m-0;
+    @apply transition-colors duration-300 font-sans m-0;
+  }
+  
+  /* Light Mode Default */
+  body {
+    background-color: #FFDCF3;
+    color: #0D2D31;
+  }
+
+  /* Dark Mode Class Aktifken */
+  .dark body {
+    background-color: #1A0B2E;
+    color: #FFE6F7;
   }
 }
 
 @layer components {
   /* Cam Efekti */
   .glass {
-    @apply bg-opacity-30 backdrop-blur-md border border-white/20 shadow-lg;
+    @apply backdrop-blur-md border shadow-lg transition-colors duration-300;
+    /* Light Mode Glass */
     background-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
   }
   
   .dark .glass {
-    background-color: rgba(0, 0, 0, 0.2);
-    border-color: rgba(255, 255, 255, 0.05);
+    /* Dark Mode Glass */
+    background-color: rgba(45, 27, 78, 0.6); /* Morumsu şeffaf */
+    border-color: rgba(214, 188, 250, 0.1);
+  }
+
+  /* Kart Stili */
+  .card {
+     @apply rounded-2xl p-6 shadow-md transition-all duration-300;
+     background-color: #FFB2F5; /* Light Card */
+  }
+  .dark .card {
+     background-color: #2D1B4E; /* Dark Card */
+     color: #FFE6F7;
   }
 }

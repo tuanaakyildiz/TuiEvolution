@@ -1,0 +1,6 @@
+# application.properties.example
+server.port=8080
+spring.datasource.url=jdbc:h2:mem:tuidb
+spring.datasource.username=Sizin_Kullanici_Adiniz
+spring.datasource.password=Sizin_Sifreniz
+# Gerçek şifrelerinizi bu dosyaya yazmayın!

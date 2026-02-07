@@ -4,14 +4,21 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  darkMode: 'class', // Class tabanlı dark mode
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        bgPrimary: 'var(--bg-primary)',
-        bgSecondary: 'var(--bg-secondary)',
-        textPrimary: 'var(--text-primary)',
-        accent: 'var(--accent)',
+        // Light Mode
+        bgPrimary: '#FFDCF3',    
+        bgSecondary: '#FFB2F5',  
+        textPrimary: '#0D2D31',
+        accent: '#4F348D',      
+
+        // Dark Mode (GÜNCELLENDİ)
+        darkBgPrimary: '#1A0B2E',    // Çok koyu mor arka plan
+        darkBgSecondary: '#2D1B4E',  // Kartlar için biraz daha açık mor
+        darkTextPrimary: '#FFE6F7',  // Okunabilir Açık Pembe Yazı
+        darkAccent: '#D6BCFA',       // Dark mode'da parlayan mor
       },
       animation: {
         marquee: 'marquee 25s linear infinite',
