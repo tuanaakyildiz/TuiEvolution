@@ -8,7 +8,7 @@ const Home = () => {
       
       {/* Hero Section */}
       <div className="text-center px-4 mb-16 animate-fade-in">
-        <h1 className="text-5xl md:text-7xl font-extrabold mb-6 text-textPrimary tracking-tight">
+        <h1 className="text-5xl md:text-7xl font-extrabold mb-6 text-textprimary tracking-tight">
           Welcome to <span className="text-accent bg-clip-text text-transparent bg-gradient-to-r from-accent to-pink-500">TUIEVOLUTION</span>
         </h1>
         <p className="text-xl opacity-80 max-w-2xl mx-auto font-light">
