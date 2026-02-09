@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Menu, X, Sun, Moon, User, ChevronDown, LogOut } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
+import { FaBars, FaTimes, FaUserCircle } from 'react-icons/fa';
 
 export const Navbar = () => {
   const { isDarkMode, toggleTheme } = useTheme();

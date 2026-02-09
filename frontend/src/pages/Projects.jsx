@@ -35,7 +35,7 @@ export const Projects = () => {
         <h1 className="text-4xl font-bold text-center mb-16">Our Project Catalog</h1>
         <div className="grid gap-16">
           {projects.map(project => (
-            <div key={project.id} id={`project-${project.id}`} className="glass p-8 rounded-[2rem] flex flex-col md:flex-row gap-8">
+            <div key={project.id} id={`project-${project.id}`}  className="glass p-8 rounded-[2rem] flex flex-col md:flex-row gap-8">
               <div className="w-full md:w-1/2 h-64 bg-accent/10 rounded-2xl overflow-hidden">
                 <img src={project.imageUrl} className="w-full h-full object-cover" alt={project.title} />
               </div>
