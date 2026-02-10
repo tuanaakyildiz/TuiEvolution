@@ -29,6 +29,7 @@ const Projects = lazy(() => import('../pages/Projects'));
 const About = lazy(() => import('../pages/About'));
 const Profile = lazy(() => import('../pages/Profile'));
 const Login = lazy(() => import('../pages/Login'));
+const Contact = lazy(()=> import('../pages/Contact'));
 
 // Alt sayfalar
 const EvrimAluc = lazy(() => import('../pages/AboutUs/EvrimAluc'));
@@ -54,6 +55,7 @@ const AppRouter = () => {
         
         <Route path="/profile" element={<Profile />} />
         <Route path="/login" element={<Login />} />
+        <Route  path="/contact" element={<Contact/>}  />
         
         <Route path="*" element={<div className="pt-40 text-center text-3xl font-bold text-accent">404 - Not Found</div>} />
       </Routes>
