@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import AppRouter from './router/AppRouter';
 import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider } from './context/AuthContext';
+import AuraTech from './components/AuraTech';
 
 function App() {
   return (
@@ -17,6 +18,8 @@ function App() {
             
             <Navbar />
             <AppRouter />
+            <AuraTech />
+            
           </div>
         </BrowserRouter>
       </AuthProvider>

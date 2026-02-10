@@ -54,7 +54,7 @@ export const Projects = () => {
       {showScrollTop && (
         <button 
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="fixed bottom-10 right-10 p-4 bg-accent text-white rounded-full shadow-2xl hover:scale-110 transition-all z-50"
+          className="fixed bottom-10 left-20 p-4 bg-accent text-white rounded-full shadow-2xl hover:scale-110 transition-all z-50"
         >
           <ArrowUp size={24} />
         </button>
