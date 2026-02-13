@@ -1,4 +1,4 @@
-FROM maven:3.9.4-eclipse-temurin-21 AS build
+FROM maven:3.9.4-eclipse-temurin-25 AS build
 # Root Directory backend olarak seçildiği için nokta (.) artık backend klasörünü temsil eder
 WORKDIR /app
 COPY . .
