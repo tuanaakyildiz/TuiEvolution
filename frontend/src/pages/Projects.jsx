@@ -13,7 +13,7 @@ export const Projects = () => {
   const getProjectSlug = (title) => title ? title.trim().replace(/\s+/g, '_') : '';
 
   useEffect(() => {
-    fetch('http://localhost:8080/api/projects')
+    fetch('https://tuievolution-backend.onrender.com')
       .then(res => res.json())
       .then(data => setProjects(data))
       .catch(err => console.error("Projeler yüklenemedi:", err));

@@ -13,7 +13,7 @@ const Profile = () => {
   setIsLoading(true);
   
   try {
-    const response = await axios.post("http://localhost:8080/api/users/login", {
+    const response = await axios.post("https://tuievolution-backend.onrender.com", {
       email: formData.email,
       password: formData.password
     });
@@ -59,7 +59,7 @@ const Profile = () => {
 
       try {
         // 2. Backend'den en güncel veriyi çek (Java Controller'ına istek atar)
-        const response = await axios.get(`http://localhost:8080/api/users/${parsedUser.id}`);
+        const response = await axios.get(`https://tuievolution-backend.onrender.com/api/users/${parsedUser.id}`);
         setUserData(response.data);
       } catch (error) {
         console.error("Profil bilgileri backend'den çekilemedi:", error);

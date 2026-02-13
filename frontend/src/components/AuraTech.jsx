@@ -34,7 +34,7 @@ const AuraTech = () => {
 
   // 1. Veritabanından Projeleri Çekme
   useEffect(() => {
-    axios.get('http://localhost:8080/api/projects')
+    axios.get('https://tuievolution-backend.onrender.com')
       .then(res => setProjects(res.data))
       .catch(err => console.error("Projeler yüklenemedi:", err));
   }, []);

@@ -6,7 +6,7 @@ export const ProjectMarquee = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:8080/api/projects')
+    fetch('https://tuievolution-backend.onrender.com')
       .then((res) => res.json())
       .then((data) => {
         setProjects(data);

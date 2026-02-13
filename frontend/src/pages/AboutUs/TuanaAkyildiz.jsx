@@ -7,7 +7,7 @@ const TuanaAkyildiz = () => {
 
   useEffect(() => {
     // Backend'den veriyi çek ve filtrele
-    axios.get('http://localhost:8080/api/team')
+    axios.get('https://tuievolution-backend.onrender.com')
       .then(res => {
         const found = res.data.find(m => m.name.toLowerCase().includes("tuana"));
         setMember(found);
