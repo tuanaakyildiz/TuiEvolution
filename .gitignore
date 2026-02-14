@@ -36,9 +36,3 @@ Thumbs.db
 .classpath
 .settings/
 .factorypath
-
-# --- Security (Sensitve Files) ---
-# Gerçek şifrelerin olduğu dosyayı git'e gönderme
-**/src/main/resources/application.properties
-# Sadece örnek dosyayı gönder (Aşağıdaki adıma bak)
-!**/src/main/resources/application.properties.example
