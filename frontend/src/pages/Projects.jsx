@@ -39,7 +39,7 @@ export const Projects = () => {
       // 3 Saniye Sonra Işığı Söndür
       const timer = setTimeout(() => {
         setHighlightedSlug(null);
-      }, 3000);
+      }, 5000);
 
       // Temizlik: Component unmount olursa veya hash değişirse timer'ı iptal et
       return () => clearTimeout(timer);
