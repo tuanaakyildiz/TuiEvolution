@@ -23,11 +23,11 @@ export const Projects = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Hash Link Yönlendirmesi
+  // Hash Link Yönlendirmesi ve Işık Zamanlayıcısı
   useEffect(() => {
     if (location.hash) {
       const slug = location.hash.replace('#', '');
-      setHighlightedSlug(slug);
+      setHighlightedSlug(slug); // Işığı yak
       
       const element = document.getElementById(slug);
       if (element) {
@@ -35,6 +35,14 @@ export const Projects = () => {
           element.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }, 500);
       }
+
+      // 3 Saniye Sonra Işığı Söndür
+      const timer = setTimeout(() => {
+        setHighlightedSlug(null);
+      }, 3000);
+
+      // Temizlik: Component unmount olursa veya hash değişirse timer'ı iptal et
+      return () => clearTimeout(timer);
     }
   }, [location, projects]);
 
@@ -57,18 +65,18 @@ export const Projects = () => {
         <div className="grid md:grid-cols-2 gap-12">
           {projects.map((project) => {
             const projectSlug = getProjectSlug(project.title);
+            // Sadece highlightedSlug ile eşleşiyorsa true döner, süre bitince false olur
             const isHighlighted = projectSlug === highlightedSlug;
 
             return (
               <div 
                 key={project.id}
                 id={projectSlug}
-                // GÜNCELLEME: 'glow-card-base' her zaman var, 'active' highlighted ise var.
-                // Hover efekti CSS'teki :hover ile otomatik çalışacak.
+                // isHighlighted true ise 'active' class'ı eklenir ve ışık yanar.
+                // False olduğunda sadece hover efekti kalır.
                 className={`group md:row-span-1 shadow-lg transition-all duration-500 rounded-2xl glow-card-base relative
                   ${isHighlighted ? 'active scale-[1.02]' : 'hover:scale-[1.02]'}`}
                 style={{ 
-                   // Arka plan rengini CSS (glow-content-wrapper) halledecek
                    backgroundColor: 'transparent'
                 }}
               >
