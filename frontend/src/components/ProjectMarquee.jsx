@@ -31,7 +31,13 @@ export const ProjectMarquee = () => {
   }, []);
 
   // Hata veya Yükleme Durumları
-  if (loading) return <div className="text-center py-10 opacity-50">Projeler Yükleniyor...</div>;
+  if (loading) return (
+    <div className="text-center py-10 opacity-50">
+      <div>Projeler Yükleniyor...</div>
+      <div>Database bağlanıldığı için bir süre alabilir</div>
+    </div>
+
+  );
   if (error) return <div className="text-center py-10 text-red-500">Verilere erişilemiyor. (CORS veya Veritabanı Hatası)</div>;
   if (!Array.isArray(projects) || projects.length === 0) return null;
 
