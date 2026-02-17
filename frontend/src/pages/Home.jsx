@@ -36,7 +36,7 @@ const Home = () => {
       <Link to="/about/tuana" className="glass p-8 rounded-[2.5rem] hover:scale-[1.02] transition-transform group cursor-pointer border-pink-300/30">
         <div className="w-16 h-16 bg-pink-500 rounded-2xl mb-6 flex items-center justify-center text-white font-bold text-xl">TA</div>
         <h3 className="text-2xl font-bold text-accent mb-2">Tuana Akyıldız</h3>
-        <p className="opacity-70">Frontend Developer & Designer. Focused on aesthetic UI/UX experiences.</p>
+        <p className="opacity-70">Software Engineer & Full-Stack Developer</p>
       </Link>
   </div>
 </section>
