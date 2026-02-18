@@ -2,6 +2,8 @@
 import React, { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
+import { useAuth } from './context/AuthContext';
+
 /**
  * Hata Kontrollü Named Export Yükleyici
  * Eğer modül içinde beklenen isim bulunamazsa konsola hata basar.
