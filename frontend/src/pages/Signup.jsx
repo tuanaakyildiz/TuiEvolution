@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import { useAuth } from '../context/AuthContext';
-import { Eye, EyeOff, Lock, Mail } from 'lucide-react';
+import { Eye, EyeOff, Lock, Mail, User } from 'lucide-react';
 
-const Login = () => {
-  const [formData, setFormData] = useState({ email: '', password: '' });
-  const [rememberMe, setRememberMe] = useState(false);
+const Signup = () => {
+  const [formData, setFormData] = useState({ name: '', email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
-  const { login } = useAuth();
+  const [success, setSuccess] = useState('');
   const navigate = useNavigate();
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -17,28 +15,21 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setSuccess('');
 
     try {
-      // DÜZELTME: URL artık doğru endpoint'e gidiyor (/api/users/login)
-      const response = await axios.post("https://tuievolution-backend.onrender.com/api/users/login", formData);
+      // Backend'deki register endpoint'i: /api/users/register
+      await axios.post("https://tuievolution-backend.onrender.com/api/users/register", formData);
+      setSuccess("Kayıt başarılı! Giriş sayfasına yönlendiriliyorsunuz...");
       
-      if (response.data) {
-        login(response.data, rememberMe);
-        navigate("/profile");
-      }
-    } catch (err) {
-      // Hata mesajını backend'den gelen mesajla göstermek daha açıklayıcı olabilir
-      const errorMsg = err.response?.data?.message || "Giriş başarısız. Lütfen bilgilerinizi kontrol edin.";
-      setError(errorMsg);
-    }
-  };
+      // 2 saniye sonra login sayfasına at
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
 
-  const handleForgotPassword = () => {
-    const email = formData.email;
-    if(email) {
-        alert(`${email} adresine şifre sıfırlama bağlantısı gönderildi! (Simülasyon)`);
-    } else {
-        alert("Lütfen önce email alanını doldurunuz.");
+    } catch (err) {
+      const errorMsg = err.response?.data?.message || "Kayıt başarısız. Lütfen tekrar deneyin.";
+      setError(errorMsg);
     }
   };
 
@@ -47,17 +38,29 @@ const Login = () => {
       <div className="w-full max-w-md p-8 rounded-3xl shadow-2xl border border-white/20" style={{ backgroundColor: 'var(--bg-secondary)' }}>
         
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold mb-2" style={{ color: 'var(--accent)' }}>Welcome Back</h2>
-          <p className="text-sm opacity-60" style={{ color: 'var(--text-primary)' }}>Login to continue your evolution</p>
+          <h2 className="text-3xl font-bold mb-2" style={{ color: 'var(--accent)' }}>Create Account</h2>
+          <p className="text-sm opacity-60" style={{ color: 'var(--text-primary)' }}>Join the evolution</p>
         </div>
 
-        {error && (
-            <div className="mb-4 p-3 rounded-lg bg-red-100 text-red-600 text-sm text-center font-bold">
-                {error}
-            </div>
-        )}
+        {error && <div className="mb-4 p-3 rounded-lg bg-red-100 text-red-600 text-sm text-center font-bold">{error}</div>}
+        {success && <div className="mb-4 p-3 rounded-lg bg-green-100 text-green-600 text-sm text-center font-bold">{success}</div>}
 
         <form onSubmit={handleSubmit} className="space-y-6">
+          
+          {/* İsim Alanı */}
+          <div className="space-y-2">
+            <label className="text-xs font-bold uppercase tracking-wider opacity-70" style={{ color: 'var(--text-primary)' }}>Full Name</label>
+            <div className="relative">
+                <User className="absolute left-4 top-1/2 -translate-y-1/2 opacity-50" size={20} />
+                <input 
+                  type="text" name="name" value={formData.name} onChange={handleChange} required 
+                  className="w-full pl-12 pr-4 py-3 rounded-xl border border-transparent focus:border-accent outline-none bg-white/50 focus:bg-white transition-all"
+                  placeholder="Evrim Aluç"
+                />
+            </div>
+          </div>
+
+          {/* Email Alanı */}
           <div className="space-y-2">
             <label className="text-xs font-bold uppercase tracking-wider opacity-70" style={{ color: 'var(--text-primary)' }}>Email Address</label>
             <div className="relative">
@@ -70,6 +73,7 @@ const Login = () => {
             </div>
           </div>
 
+          {/* Şifre Alanı */}
           <div className="space-y-2">
             <label className="text-xs font-bold uppercase tracking-wider opacity-70" style={{ color: 'var(--text-primary)' }}>Password</label>
             <div className="relative">
@@ -85,36 +89,21 @@ const Login = () => {
             </div>
           </div>
 
-          <div className="flex items-center justify-between text-sm">
-            <label className="flex items-center gap-2 cursor-pointer select-none">
-                <input 
-                    type="checkbox" 
-                    checked={rememberMe}
-                    onChange={(e) => setRememberMe(e.target.checked)}
-                    className="w-4 h-4 rounded accent-purple-600" 
-                />
-                <span style={{ color: 'var(--text-primary)' }}>Remember Me</span>
-            </label>
-            <button type="button" onClick={handleForgotPassword} className="font-bold hover:underline" style={{ color: 'var(--accent)' }}>
-                Forgot Password?
-            </button>
-          </div>
-
           <button 
             type="submit" 
             className="w-full py-4 rounded-xl font-bold text-white shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all"
             style={{ backgroundColor: 'var(--accent)' }}
           >
-            Sign In
+            Register
           </button>
         </form>
 
         <p className="text-center mt-8 text-sm opacity-70" style={{ color: 'var(--text-primary)' }}>
-          Don't have an account? <Link to="/signup" className="font-bold hover:underline" style={{ color: 'var(--accent)' }}>Register Now</Link>
+          Already have an account? <Link to="/login" className="font-bold hover:underline" style={{ color: 'var(--accent)' }}>Login Here</Link>
         </p>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default Signup;
