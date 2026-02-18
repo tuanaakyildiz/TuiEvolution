@@ -1,44 +1,46 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(() => {
-    // Hem Local hem Session storage kontrol edilir
-    const localUser = localStorage.getItem('user');
-    const sessionUser = sessionStorage.getItem('user');
-    
-    // Eğer Remember Me yapıldıysa local'den, yoksa session'dan gelir
-    const savedUser = localUser || sessionUser;
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); // Yükleniyor durumu ekledik
 
-    try {
-      return savedUser ? JSON.parse(savedUser) : null;
-    } catch (e) {
-      return null;
+  // 1. Sayfa ilk açıldığında Hafızayı (LocalStorage) Kontrol Et
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (error) {
+        console.error("Kullanıcı verisi okunamadı", error);
+        localStorage.removeItem('user');
+      }
     }
-  });
+    setLoading(false); // Kontrol bitti
+  }, []);
 
-  // Login fonksiyonu artık "rememberMe" parametresi alıyor
-  const login = (userData, rememberMe) => {
+  // 2. Giriş Fonksiyonu (Veriyi hem State'e hem Hafızaya yazar)
+  const login = (userData, rememberMe = true) => {
     setUser(userData);
+    // Eğer "Beni Hatırla" seçiliyse LocalStorage, değilse SessionStorage (tercihen hepsi local olabilir)
     if (rememberMe) {
-      // 30 Günlük Hatırlama (LocalStorage kalıcıdır, manuel silinmedikçe kalır)
       localStorage.setItem('user', JSON.stringify(userData));
     } else {
-      // Sadece tarayıcı açıkken hatırla
-      sessionStorage.setItem('user', JSON.stringify(userData));
+      localStorage.setItem('user', JSON.stringify(userData)); // Standart olarak local kullanalım
     }
   };
 
+  // 3. Çıkış Fonksiyonu (Hafızayı Temizle)
   const logout = () => {
     setUser(null);
     localStorage.removeItem('user');
-    sessionStorage.removeItem('user');
+    window.location.href = '/login'; // Kesin yönlendirme
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
-      {children}
+    <AuthContext.Provider value={{ user, login, logout, loading }}>
+      {!loading && children} {/* Yükleme bitmeden sayfayı gösterme */}
     </AuthContext.Provider>
   );
 };

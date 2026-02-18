@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import { useAuth } from '../context/AuthContext'; // 1. AuthContext EKLENDİ
 import { Eye, EyeOff, Lock, Mail, User } from 'lucide-react';
 
 const Signup = () => {
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  
+  // 2. Context'ten login fonksiyonunu alıyoruz
+  const { login } = useAuth(); 
   const navigate = useNavigate();
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -15,19 +18,22 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    setSuccess('');
 
     try {
-      // Backend'deki register endpoint'i: /api/users/register
-      await axios.post("https://tuievolution-backend.onrender.com/api/users/register", formData);
-      setSuccess("Kayıt başarılı! Giriş sayfasına yönlendiriliyorsunuz...");
+      // 3. Kayıt İsteği Atılıyor
+      const response = await axios.post("https://tuievolution-backend.onrender.com/api/users/register", formData);
       
-      // 2 saniye sonra login sayfasına at
-      setTimeout(() => {
-        navigate("/login");
-      }, 2000);
+      if (response.data) {
+        // 4. KRİTİK NOKTA: Kayıt başarılıysa gelen veriyi direkt 'login' fonksiyonuna veriyoruz.
+        // Bu sayede kullanıcıyı hem Context'e hem de LocalStorage'a yazıyoruz.
+        login(response.data);
+        
+        // 5. Hiç bekletmeden Profil sayfasına atıyoruz
+        navigate("/profile");
+      }
 
     } catch (err) {
+      console.error("Kayıt Hatası:", err);
       const errorMsg = err.response?.data?.message || "Kayıt başarısız. Lütfen tekrar deneyin.";
       setError(errorMsg);
     }
@@ -42,8 +48,11 @@ const Signup = () => {
           <p className="text-sm opacity-60" style={{ color: 'var(--text-primary)' }}>Join the evolution</p>
         </div>
 
-        {error && <div className="mb-4 p-3 rounded-lg bg-red-100 text-red-600 text-sm text-center font-bold">{error}</div>}
-        {success && <div className="mb-4 p-3 rounded-lg bg-green-100 text-green-600 text-sm text-center font-bold">{success}</div>}
+        {error && (
+            <div className="mb-4 p-3 rounded-lg bg-red-100 text-red-600 text-sm text-center font-bold">
+                {error}
+            </div>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
           

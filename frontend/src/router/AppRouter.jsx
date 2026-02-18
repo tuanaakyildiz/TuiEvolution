@@ -54,7 +54,15 @@ const AppRouter = () => {
         <Route path="/about/evrim" element={<EvrimAluc />} />
         <Route path="/about/tuana" element={<TuanaAkyildiz />} />
         
-        <Route path="/profile" element={<Profile />} />
+        <Route 
+          path="/profile" 
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          } 
+        />
+        
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route  path="/contact" element={<Contact/>}  />

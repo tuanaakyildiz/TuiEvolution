@@ -19,17 +19,21 @@ const Login = () => {
     setError('');
 
     try {
-      // DÜZELTME: URL artık doğru endpoint'e gidiyor (/api/users/login)
+      // Backend'e istek at
       const response = await axios.post("https://tuievolution-backend.onrender.com/api/users/login", formData);
       
       if (response.data) {
-        login(response.data, rememberMe);
+        console.log("Giriş Başarılı:", response.data); // Konsolda veriyi gör
+        
+        // 1. Önce Context'i güncelle ve hafızaya yaz
+        login(response.data); 
+        
+        // 2. Hafif bir gecikmeyle veya hemen yönlendir
         navigate("/profile");
       }
     } catch (err) {
-      // Hata mesajını backend'den gelen mesajla göstermek daha açıklayıcı olabilir
-      const errorMsg = err.response?.data?.message || "Giriş başarısız. Lütfen bilgilerinizi kontrol edin.";
-      setError(errorMsg);
+      console.error("Giriş Hatası:", err);
+      setError("Giriş başarısız. E-posta veya şifre hatalı.");
     }
   };
 
