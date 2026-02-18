@@ -77,7 +77,7 @@ const Signup = () => {
                 <input 
                   type="email" name="email" value={formData.email} onChange={handleChange} required 
                   className="w-full pl-12 pr-4 py-3 rounded-xl border border-transparent focus:border-accent outline-none bg-white/50 focus:bg-white transition-all"
-                  placeholder="admin@tuievolution.com"
+                  placeholder="test@example.com"
                 />
             </div>
           </div>
@@ -90,7 +90,7 @@ const Signup = () => {
                 <input 
                   type={showPassword ? "text" : "password"} name="password" value={formData.password} onChange={handleChange} required 
                   className="w-full pl-12 pr-12 py-3 rounded-xl border border-transparent focus:border-accent outline-none bg-white/50 focus:bg-white transition-all"
-                  placeholder="••••••"
+                  placeholder="123456"
                 />
                 <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 opacity-50 hover:opacity-100">
                     {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}

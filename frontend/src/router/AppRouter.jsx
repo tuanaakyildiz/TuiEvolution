@@ -36,6 +36,23 @@ const Signup = lazy(()=> import('../pages/Signup'));
 const EvrimAluc = lazy(() => import('../pages/AboutUs/EvrimAluc'));
 const TuanaAkyildiz = lazy(() => import('../pages/AboutUs/TuanaAkyildiz'));
 
+const ProtectedRoute = ({ children }) => {
+  const { user, loading } = useAuth();
+
+  // Eğer context hala yükleniyorsa bekle (Boş ekran veya loading spinner dönebilir)
+  if (loading) {
+     return <div>Yükleniyor...</div>; 
+  }
+
+  // Kullanıcı yoksa Login'e at
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  // Kullanıcı varsa sayfayı göster
+  return children;
+};
+
 const Loader = () => (
   <div className="min-h-screen flex items-center justify-center bg-bgPrimary dark:bg-darkBgPrimary">
     <div className="w-12 h-12 border-4 border-accent border-t-transparent rounded-full animate-spin"></div>
@@ -62,7 +79,7 @@ const AppRouter = () => {
             </ProtectedRoute>
           } 
         />
-        
+
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route  path="/contact" element={<Contact/>}  />
