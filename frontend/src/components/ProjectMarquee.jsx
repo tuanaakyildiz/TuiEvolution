@@ -34,7 +34,7 @@ export const ProjectMarquee = () => {
   if (loading) return (
     <div className="text-center py-10 opacity-50">
       <div>Projeler Yükleniyor...</div>
-      <div>Database bağlanıldığı için bir süre alabilir</div>
+      <div>Database bağlanıldığı için birkaç dakika alabilir</div>
     </div>
 
   );
