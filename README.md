@@ -31,8 +31,8 @@ TuiEvolution is a modern, full-stack web application built to showcase innovativ
 
 ## 👥 The Team
 TuiEvolution is developed by a two-person team combining diverse technical expertise:
-* **Evrim Aluç:** Software Engineer focusing on Backend architecture, Database optimization, and integrating Artificial Intelligence/Machine Learning models into real-world applications.
-* **Tuana Akyıldız:** Fullstack Software Engineer with expertise in Java-based Backend systems and modern Frontend interfaces, currently exploring AI technologies like ANN and LSTM models.
+* **Evrim Aluç:** Software Engineer focusing on Frontend Design.
+* **Tuana Akyıldız:** Fullstack Software Engineer worked in Java-based Backend systems and modern Frontend interfaces.
 
 ## 🛠️ How to Run Locally
 
